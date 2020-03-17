@@ -419,6 +419,7 @@ Scanner::Scanner(const unsigned char* buf, int len) {
 Scanner::Scanner(const wchar_t* fileName) {
 	FILE* stream;
 	char *chFileName = coco_string_create_char(fileName);
+	parseFileName = coco_string_create_char(fileName);
 	if ((stream = fopen(chFileName, "rb")) == NULL) {
 		wprintf(L"--- Cannot open file %ls\n", fileName);
 		exit(1);
@@ -441,6 +442,7 @@ Scanner::~Scanner() {
 		free(firstHeap);
 		firstHeap = cur;
 	}
+	coco_string_delete(parseFileName);
 	delete [] tval;
 	delete buffer;
 }

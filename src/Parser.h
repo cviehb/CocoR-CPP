@@ -43,8 +43,9 @@ namespace Coco {
 class Errors {
 public:
 	int count;			// number of errors detected
+	char * file;
 
-	Errors();
+	Errors(char * FileName);
 	void SynErr(int line, int col, int n);
 	void Error(int line, int col, const wchar_t *s);
 	void Warning(int line, int col, const wchar_t *s);

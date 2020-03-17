@@ -788,7 +788,7 @@ Parser::Parser(Scanner *scanner) {
 	minErrDist = 2;
 	errDist = minErrDist;
 	this->scanner = scanner;
-	errors = new Errors();
+	errors = new Errors(scanner->parseFileName);
 }
 
 bool Parser::StartOf(int s) {
@@ -830,8 +830,9 @@ Parser::~Parser() {
 	delete dummyToken;
 }
 
-Errors::Errors() {
+Errors::Errors(char * FileName) {
 	count = 0;
+	file = FileName;
 }
 
 void Errors::SynErr(int line, int col, int n) {
@@ -898,18 +899,18 @@ void Errors::SynErr(int line, int col, int n) {
 		}
 		break;
 	}
-	wprintf(L"-- line %d col %d: %ls\n", line, col, s);
+	wprintf(L"%s -- line %d col %d: %ls\n", file, line, col, s);
 	coco_string_delete(s);
 	count++;
 }
 
 void Errors::Error(int line, int col, const wchar_t *s) {
-	wprintf(L"-- line %d col %d: %ls\n", line, col, s);
+	wprintf(L"%s -- line %d col %d: %ls\n", file, line, col, s);
 	count++;
 }
 
 void Errors::Warning(int line, int col, const wchar_t *s) {
-	wprintf(L"-- line %d col %d: %ls\n", line, col, s);
+	wprintf(L"%s -- line %d col %d: %ls\n", file, line, col, s);
 }
 
 void Errors::Warning(const wchar_t *s) {

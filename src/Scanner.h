@@ -281,6 +281,7 @@ public:
 	Token* Scan();
 	Token* Peek();
 	void ResetPeek();
+	char * parseFileName;
 
 }; // end Scanner
 
